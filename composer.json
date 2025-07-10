@@ -1,0 +1,19 @@
+{
+  "name": "basanta/laravel-websocket",
+  "description": "WebSocket server for Laravel applications",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "basanta",
+      "email": "basanta@systha.net"
+    }
+  ],
+  "require": {
+  },
+  "autoload": {
+    "psr-4": {
+      "Basanta\\LaravelWebsocket\\": "src/"
+    }
+  }
+}
