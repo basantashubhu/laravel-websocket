@@ -78,7 +78,7 @@ Or copy the `server/app.js` file to your project root and run:
 node app.js
 ```
 
-The server will start on `ws://localhost:8080` by default.
+The server will start on `ws://localhost:6001` by default.
 
 #### Quick Test
 
@@ -163,7 +163,7 @@ event(new UserMessageEvent($user, $message));
 Connect to the WebSocket server from your frontend:
 
 ```javascript
-const ws = new WebSocket('ws://localhost:8080');
+const ws = new WebSocket('ws://localhost:6001');
 
 ws.onopen = function() {
     console.log('Connected to WebSocket server');
@@ -196,7 +196,7 @@ ws.send(JSON.stringify({
 You can also emit events directly via HTTP POST:
 
 ```bash
-curl -X POST http://localhost:8080/emit \
+curl -X POST http://localhost:6001/emit \
   -H "Content-Type: application/json" \
   -d '{
     "event": "custom.event",
@@ -210,7 +210,7 @@ curl -X POST http://localhost:8080/emit \
 
 ### Server Configuration
 
-The WebSocket server runs on port 8080 by default. You can customize the port in several ways:
+The WebSocket server runs on port 6001 by default. You can customize the port in several ways:
 
 #### Method 1: Command-line Arguments
 ```bash
@@ -279,7 +279,7 @@ Get server status and connection information.
 
 **Example:**
 ```bash
-curl http://localhost:8080/status
+curl http://localhost:6001/status
 ```
 
 ## Development
@@ -292,7 +292,7 @@ For development, you can run the server with automatic restart:
 # Install nodemon globally
 npm install -g nodemon
 
-# Run with nodemon (default port 8080)
+# Run with nodemon (default port 6001)
 nodemon server/app.js
 
 # Run with nodemon on custom port
@@ -305,7 +305,7 @@ You can monitor the server status and connected clients:
 
 ```bash
 # Check server status
-curl http://localhost:8080/status
+curl http://localhost:6001/status
 
 # Response example:
 # {"connectedClients": 3}
@@ -340,7 +340,7 @@ You can also test the WebSocket connection using online WebSocket testing tools 
 <body>
     <div id="messages"></div>
     <script>
-        const ws = new WebSocket('ws://localhost:8080');
+        const ws = new WebSocket('ws://localhost:6001');
         const messages = document.getElementById('messages');
         
         ws.onmessage = function(event) {
