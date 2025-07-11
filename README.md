@@ -7,9 +7,11 @@ A simple and lightweight WebSocket server package for Laravel applications that 
 - 🚀 **Lightweight WebSocket Server**: Pure Node.js WebSocket implementation without external dependencies
 - 🔄 **Real-time Event Broadcasting**: Automatic broadcasting of Laravel events to connected WebSocket clients
 - 🎯 **Event-driven Architecture**: Listen to all Laravel events and broadcast specific ones
-- 📡 **HTTP API**: RESTful endpoint for manual event emission
+- 📡 **HTTP API**: RESTful endpoints for manual event emission and server monitoring
 - 🔌 **Simple Integration**: Easy setup with Laravel service provider
 - ⚡ **High Performance**: Minimal overhead with efficient message handling
+- ⚙️ **Configurable Port**: Support for custom port configuration via command-line arguments
+- 📊 **Server Monitoring**: Built-in status endpoint to monitor connected clients
 
 ## Installation
 
@@ -55,7 +57,19 @@ Or copy the `server/app.js` file to your project root and run:
 node app.js
 ```
 
-The server will start on `ws://localhost:8080`.
+The server will start on `ws://localhost:8080` by default.
+
+#### Custom Port Configuration
+
+You can specify a custom port using command-line arguments:
+
+```bash
+# Run on port 3000
+node app.js --port=3000
+
+# Run on port 9000
+node app.js --port=9000
+```
 
 ## Usage
 
@@ -167,12 +181,20 @@ curl -X POST http://localhost:8080/emit \
 
 ### Server Configuration
 
-The WebSocket server runs on port 8080 by default. You can modify the `server/app.js` file to change the port:
+The WebSocket server runs on port 8080 by default. You can customize the port in several ways:
+
+#### Method 1: Command-line Arguments
+```bash
+node app.js --port=3000
+```
+
+#### Method 2: Modify the Server File
+You can modify the `server/app.js` file to change the default port:
 
 ```javascript
-server.listen(8080, () => {
-    console.log('WebSocket server running on ws://localhost:8080');
-});
+let defaultOptions = {
+    port: 3000, // Change default port here
+};
 ```
 
 ### Laravel Configuration
@@ -215,6 +237,22 @@ Emit an event to all connected WebSocket clients.
 }
 ```
 
+#### GET /status
+
+Get server status and connection information.
+
+**Response:**
+```json
+{
+  "connectedClients": 5
+}
+```
+
+**Example:**
+```bash
+curl http://localhost:8080/status
+```
+
 ## Development
 
 ### Running the WebSocket Server
@@ -225,8 +263,23 @@ For development, you can run the server with automatic restart:
 # Install nodemon globally
 npm install -g nodemon
 
-# Run with nodemon
+# Run with nodemon (default port 8080)
 nodemon server/app.js
+
+# Run with nodemon on custom port
+nodemon server/app.js -- --port=3000
+```
+
+### Server Monitoring
+
+You can monitor the server status and connected clients:
+
+```bash
+# Check server status
+curl http://localhost:8080/status
+
+# Response example:
+# {"connectedClients": 3}
 ```
 
 ### Testing
@@ -283,6 +336,12 @@ This is a private package. For feature requests or bug reports, please contact t
 For support, please contact: basanta@systha.net
 
 ## Changelog
+
+### Version 1.1.0
+- Added configurable port support via command-line arguments
+- Added `/status` endpoint for server monitoring
+- Improved server configuration options
+- Enhanced development workflow with better port management
 
 ### Version 1.0.0
 - Initial release
