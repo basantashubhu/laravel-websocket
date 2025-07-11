@@ -12,6 +12,16 @@ class LaravelWebsocketProvider extends ServiceProvider
         Event::listen('*', function($eventName, $data) {
             app(Listener\Broadcast::class)->handle($data[0]);
         });
+
+        // Publish configuration file
+        $this->publishes([
+            __DIR__.'/config/websocket.php' => config_path('websocket.php'),
+        ], 'websocket-config');
+
+        // Publish views
+        $this->publishes([
+            dirname(__DIR__).'/resources/views' => resource_path('views/vendor/laravel-websocket'),
+        ], 'websocket-views');
     }
 
     public function register()

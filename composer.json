@@ -2,7 +2,7 @@
   "name": "basanta/laravel-websocket",
   "description": "WebSocket server for Laravel applications",
   "minimum-stability": "stable",
-  "license": "proprietary",
+  "license": "MIT",
   "authors": [
     {
       "name": "basanta",
@@ -22,5 +22,10 @@
         "Basanta\\LaravelWebsocket\\LaravelWebsocketProvider"
       ]
     }
+  },
+  "scripts": {
+    "post-install-cmd": [
+      "@php artisan vendor:publish --tag=websocket-config --force"
+    ]
   }
 }

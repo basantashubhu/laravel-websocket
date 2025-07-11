@@ -4,6 +4,7 @@ namespace Basanta\LaravelWebsocket\Listener;
 
 use Basanta\LaravelWebsocket\Contract\ShouldBroadcastWebsocket;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Log;
 
 class Broadcast
 {
@@ -28,7 +29,13 @@ class Broadcast
                 'timeout' => 2,
             ]);
         } catch (\Exception $e) {
-            // Optionally log or handle the error
+            // Log the error for debugging
+            if (config('app.debug')) {
+                Log::warning('WebSocket broadcast failed: ' . $e->getMessage(), [
+                    'event' => $payload['event'],
+                    'error' => $e->getMessage()
+                ]);
+            }
         }
     }
 }

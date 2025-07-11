@@ -34,7 +34,21 @@ composer require basanta/laravel-websocket
 ],
 ```
 
-### 3. Install Node.js Dependencies
+### 3. Publish Configuration (Optional)
+
+Publish the configuration file to customize settings:
+
+```bash
+php artisan vendor:publish --tag=websocket-config
+```
+
+This will create a `config/websocket.php` file where you can customize:
+- WebSocket server port
+- Host address  
+- Connection timeout
+- Debug logging
+
+### 4. Install Node.js Dependencies
 
 The WebSocket server requires Guzzle HTTP client for communication:
 
@@ -42,8 +56,14 @@ The WebSocket server requires Guzzle HTTP client for communication:
 composer require guzzlehttp/guzzle
 ```
 
-### 4. Start the WebSocket Server
+### 5. Start the WebSocket Server
 
+#### Option 1: Using Laravel Command (Recommended)
+```bash
+php artisan websocket:serve
+```
+
+#### Option 2: Manual Start
 Navigate to the package directory and start the Node.js server:
 
 ```bash
@@ -325,7 +345,7 @@ You can test the WebSocket connection using online WebSocket testing tools or cr
 
 ## License
 
-This package is proprietary software. All rights reserved.
+This package is open-source software licensed under the [MIT license](LICENSE).
 
 ## Contributing
 
