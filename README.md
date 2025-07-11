@@ -12,6 +12,7 @@ A simple and lightweight WebSocket server package for Laravel applications that 
 - ⚡ **High Performance**: Minimal overhead with efficient message handling
 - ⚙️ **Configurable Port**: Support for custom port configuration via command-line arguments
 - 📊 **Server Monitoring**: Built-in status endpoint to monitor connected clients
+- 🎮 **Testing Playground**: Built-in web interface for testing WebSocket connections
 
 ## Installation
 
@@ -78,6 +79,14 @@ node app.js
 ```
 
 The server will start on `ws://localhost:8080` by default.
+
+#### Quick Test
+
+Once the server is running, you can test it immediately by visiting the built-in playground:
+
+```
+http://your-app.test/laravel-websocket/playground
+```
 
 #### Custom Port Configuration
 
@@ -304,7 +313,23 @@ curl http://localhost:8080/status
 
 ### Testing
 
-You can test the WebSocket connection using online WebSocket testing tools or create a simple HTML file:
+#### Built-in Playground
+
+The package includes a built-in playground for testing WebSocket connections. After starting your WebSocket server, visit:
+
+```
+http://your-app.test/laravel-websocket/playground
+```
+
+The playground provides:
+- Real-time connection status
+- Interactive message sending
+- Live message display
+- Easy testing without writing custom HTML
+
+#### Manual Testing
+
+You can also test the WebSocket connection using online WebSocket testing tools or create a simple HTML file:
 
 ```html
 <!DOCTYPE html>
