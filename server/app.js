@@ -1,5 +1,22 @@
 const http = require('http');
 const crypto = require('crypto');
+const { argv } = require('process');
+
+let defaultOptions = {
+    port: 8080,
+};
+
+if (argv.length > 2) {
+    for (let i = 2; i < argv.length; i++) {
+        const arg = argv[i];
+        const [key, value] = arg.split('=');
+        if (key && value) {
+            const optionKey = key.replace('--', '');
+            defaultOptions[optionKey] = value;
+        }
+    }
+}
+
 
 const server = http.createServer((req, res) => {
     if (req.method === 'POST' && req.url === '/emit') {
@@ -22,6 +39,9 @@ const server = http.createServer((req, res) => {
                 res.end(JSON.stringify({ error: e.message || 'Invalid JSON' }));
             }
         });
+    } else if(req.method === 'GET' && req.url === '/status') {
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ connectedClients: clients.size }));
     } else {
         res.writeHead(404);
         res.end();
@@ -61,6 +81,7 @@ server.on('upgrade', (req, socket) => {
     clients.add(socket);
 
     socket.on('data', (buffer) => {
+        
         // Parse incoming frame
         if (buffer.length < 2) return;
         const secondByte = buffer[1];
@@ -102,8 +123,8 @@ server.on('upgrade', (req, socket) => {
         // Broadcast to all clients
         for (const client of clients) {
             if (client !== socket) {
-                sendFrame(client, Buffer.from(JSON.stringify(parsed)));
             }
+            sendFrame(client, Buffer.from(JSON.stringify(parsed)));
         }
     });
 
@@ -145,6 +166,6 @@ function sendFrame(socket, data) {
     socket.write(Buffer.concat([header, data]));
 }
 
-server.listen(8080, () => {
-    console.log('WebSocket server running on ws://localhost:8080');
+server.listen(defaultOptions.port, () => {
+    console.log('WebSocket server running on ws://localhost:' + defaultOptions.port);
 });

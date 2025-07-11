@@ -22,7 +22,8 @@ class Broadcast
             'data' => method_exists($event, 'broadcastWith') ? $event->broadcastWith() : $event,
         ];
         try {
-            $client->post('http://localhost:8080/emit', [
+            $port = config('websocket.port');
+            $client->post("http://localhost:{$port}/emit", [
                 'json' => $payload,
                 'timeout' => 2,
             ]);

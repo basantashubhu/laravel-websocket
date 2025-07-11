@@ -13,4 +13,14 @@ class LaravelWebsocketProvider extends ServiceProvider
             app(Listener\Broadcast::class)->handle($data[0]);
         });
     }
+
+    public function register()
+    {
+        $this->loadRoutesFrom(__DIR__.'/routes/web.php');
+        $this->loadViewsFrom(dirname(__DIR__).'/resources/views', 'laravel-websocket');
+        $this->mergeConfigFrom(__DIR__.'/config/websocket.php', 'websocket');
+        $this->commands([
+            Commands\StartWebsocketServerCommand::class,
+        ]);
+    }
 }
