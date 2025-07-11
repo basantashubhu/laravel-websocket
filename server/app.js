@@ -123,8 +123,8 @@ server.on('upgrade', (req, socket) => {
         // Broadcast to all clients
         for (const client of clients) {
             if (client !== socket) {
+                sendFrame(client, Buffer.from(JSON.stringify(parsed)));
             }
-            sendFrame(client, Buffer.from(JSON.stringify(parsed)));
         }
     });
 
